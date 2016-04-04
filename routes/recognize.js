@@ -29,7 +29,11 @@ module.exports = function(req, res) {
     // wait 3 seconds before asking Facebook (they recognize asynchronously)
     setTimeout(function() {
       recognize(imgId, function(result) {
-        res.send(result);
+        if(result.length === 0) {
+          res.send({ error: 'Facebook couldn\'t recognize this picture.' });
+        } else {
+          res.send(result);
+        }
       })
     }, 3000)
   });
